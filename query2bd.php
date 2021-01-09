@@ -36,6 +36,7 @@ $queryarr = array();
  * результат запроса к БД и в ином случае (ошибки)
  * выдает сообщение об ошибке
  * @var object
+ * https://www.php.net/manual/ru/mysqli.query.php
  */
 if ($result = $mysqli->query($sql)) {
   // Предусловие проверки наличия в $result объекта результата
@@ -50,13 +51,15 @@ if ($result = $mysqli->query($sql)) {
     // Декодирование содержимого json-поля city и помещение в массив
     $queryarr[] = json_decode($obj->city, true);
   }
+  $result->close();
 } else {
   echo "Не удалось выполнить запрос: (" . $mysqli->errno . ") " . $mysqli->error;
+  $result->close();
 }
-
-//echo $decodestring;
-
+$mysqli->close();
 
 echo '<pre>';
 var_dump($queryarr);
 echo '</pre>';
+
+?>
