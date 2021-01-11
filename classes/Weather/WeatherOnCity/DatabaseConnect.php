@@ -1,8 +1,8 @@
 <?php
 
-namespace WheaterOnCity;
+namespace Weather\WeatherOnCity;
 
-class DatabaseQuery {
+class DatabaseConnect {
   private $connect, $dbHost, $dbAccount, $dbPassw, $dbName;
 
   function __construct($dbHost = "mariadb", $dbAccount = "quickresto", $dbPassw = "quickresto", $dbName = "quickresto") {
@@ -23,7 +23,10 @@ class DatabaseQuery {
     }
   }
 
-  public function main() {
+  public function open_connect() {
     return $this->connect;
+  }
+  public function close_connect() {
+    return $this->connect->close();
   }
 }
