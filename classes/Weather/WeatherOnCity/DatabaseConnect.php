@@ -5,12 +5,13 @@ namespace Weather\WeatherOnCity;
 class DatabaseConnect {
   private $connect, $dbHost, $dbAccount, $dbPassw, $dbName;
 
-  function __construct($dbHost = "mariadb", $dbAccount = "quickresto", $dbPassw = "quickresto", $dbName = "quickresto") {
+  public function __construct($dbHost = "mariadb", $dbAccount = "quickresto", $dbPassw = "quickresto", $dbName = "quickresto") {
     $this->dbHost = $dbHost;
     $this->dbAccount = $dbAccount;
     $this->dbPassw = $dbPassw;
     $this->dbName = $dbName;
-    $this->connect = new \mysqli($this->dbHost, $this->dbAccount, $this->dbPassw, $this->dbName);
+    $this->connect = mysqli_connect($this->dbHost, $this->dbAccount, $this->dbPassw, $this->dbName);
+    // $this->connect = new \mysqli($this->dbHost, $this->dbAccount, $this->dbPassw, $this->dbName);
     /**
      * Условие, которое одновренменно делает и проверяет соединение с БД
      * и выдает сообщение о его наличии/отсутствии

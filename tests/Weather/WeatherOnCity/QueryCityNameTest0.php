@@ -18,30 +18,35 @@ spl_autoload_register(function ($class_name) {
     require $_SERVER['PWD'].'/classes' . '/' . str_replace("\\", "/", $class_name) . '.php';
 });
 
-class QueryCityNameTest extends TestCase
+class QueryCityNameTest0 extends TestCase
 {
-  protected $cityName, $connect;
 
-  protected function setUp(): void
+  public function testCityName()
   {
-      $this->cityName = "Moscow";
-      if (\extension_loaded('mysqli')) {
-        $this->connect = New DatabaseConnect();
-      }
+    $cityName = "Moscow";
+    $this->assertNotEmpty($cityName, $message = $cityName);
+    return $cityName;
   }
 
-  protected function tearDown(): void
+  /**
+   * @uses \Weather\WeatherOnCity\DatabaseConnect
+   */
+  public function testDBConnect()
   {
-      $this->cityName = "";
-      $this->connect->close_connect();
+    $connect = New DatabaseConnect("mariadb", "quickresto", "quickresto", "quickresto");
+    $this->assertNotFalse(\is_object($connect));
+    return $connect;
   }
 
-  public function testQueryCityName()
+  /**
+   * @depends testCityName
+   * @depends testDBConnect
+   */
+  public function testQueryCityName($cityName, $connect)
   {
-    $cities = New QueryCityName($this->cityName, $this->connect);
+    $cities = New QueryCityName($cityName, $connect);
     $citiesArr = $cities->responseArray();
-    //echo "string";
-    $this->assertNotFalse(($citiesArr[0]["name"] == $this->cityName));
+    $this->assertNotFalse(($citiesArr[0]["name"] == $cityName));
   }
 
 }
