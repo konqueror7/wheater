@@ -7,7 +7,7 @@ class WeatherRequestCity
   private $apiKey, $cityId;
 
   function __construct($cityId) {
-    $this->apiKey = "5d125367d5c0dd75c25936c5f9d3cfd8";
+    $this->apiKey = "youropenweatherapikey";
     $this->cityId = $cityId;
   }
 
